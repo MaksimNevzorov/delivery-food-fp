@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.logo {
+  background-size: contain;
+  color: rgba(255, 255, 255, 0);
+}
+
+.navigation ul {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  margin: 0;
+}
+
+.link {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.navigation ul li a {
+  text-decoration: none;
+}
+
+.navigation ul li .active,
+.navigation ul li a:hover {
+  color: #d91d2a;
+}
