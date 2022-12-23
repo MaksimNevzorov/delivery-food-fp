@@ -1,9 +1,12 @@
 export class EventBus {
-  constructor(description = 'event-bus') {
-    this.eventTarget = document.appendChild(document.createComment(description));
+  constructor(description = "event-bus") {
+    this.eventTarget = document.appendChild(
+      document.createComment(description)
+    );
   }
 
   on(type, listener) {
+    // console.log("addEventListener");
     this.eventTarget.addEventListener(type, listener);
   }
 

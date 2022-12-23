@@ -48,11 +48,13 @@ export class Header extends core.Component {
 
   render() {
     return `
-    <nav class="navbar navbar-expand-lg bg-secondary" style="--bs-bg-opacity: .3;>
+    <nav class="navbar navbar-expand-lg bg-secondary" >
     <div class="container" >
         <a class="navbar-brand" href="#">
-            <img src="./assets/images/logo.svg" alt="Bootstrap" width="30" height="24">
-            Delivery
+            <it-link to='${appRoutes.home}' classname='header-link' title="">
+              <img src="./assets/images/logo.svg" alt="Bootstrap" width="30" height="24">
+              Delivery
+            </it-link>
         </a>
     </div>
     <div class="container-fluid justify-content-end" >
@@ -71,11 +73,13 @@ export class Header extends core.Component {
                 <li class="nav-item">
                   <it-link to='${appRoutes.signIn}' classname='header-link' title="">Sign Up</it-link>
                 </li>
-                <li class="nav-item dropdown ">
-                    <span class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown">
+                    <span class="nav-link btn-secondary dropdown-toggle show" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                     Basket
                     </span>
-                    <dish-cart></dish-cart>
+                    <form class="dropdown-menu p-4 justify-content-end" style="width: 346px; top: 120%; left: -275px;">
+                      <dish-cart></dish-cart>
+                    </form>
                 </li>
             </ul>
     </div>

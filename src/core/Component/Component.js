@@ -3,26 +3,28 @@ export class Component extends HTMLElement {
     super();
     this.state = {};
     this.props = {};
-    this.isShadow = false
+    this.isShadow = false;
   }
 
   setState(callback) {
+    this.componentWillUpdate();
     this.state = callback(this.state);
-    if(this.isShadow) {
-      this.shadowRoot.innerHTML = this.render()
+    if (this.isShadow) {
+      this.shadowRoot.innerHTML = this.render();
     } else {
-      this.innerHTML = this.render()
+      this.innerHTML = this.render();
     }
+    this.componentDidUpdate();
   }
 
   connectedCallback() {
-    if(this.isShadow) {
-      this.attachShadow({ mode: 'open' });
+    if (this.isShadow) {
+      this.attachShadow({ mode: "open" });
       const tml = document.createElement("template");
-      tml.innerHTML = this.render()
-      this.shadowRoot.append(tml.content.cloneNode(true))
+      tml.innerHTML = this.render();
+      this.shadowRoot.append(tml.content.cloneNode(true));
     } else {
-      this.innerHTML = this.render()
+      this.innerHTML = this.render();
     }
     this.componentDidMount();
   }
@@ -45,6 +47,6 @@ export class Component extends HTMLElement {
   componentDidMount() {}
   componentWillUnmount() {}
   componentWillUpdate() {}
-  componentWillUnmount() {}
+  componentDidUpdate() {}
   render() {}
 }

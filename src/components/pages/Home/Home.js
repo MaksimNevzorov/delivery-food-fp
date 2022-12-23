@@ -1,4 +1,4 @@
-import { Component } from "../../../core";
+import { Component, eventBus } from "../../../core";
 import { databaseService } from "../../../services/Database";
 import "../../organisms";
 import "./home.scss";
@@ -50,11 +50,11 @@ export class HomePage extends Component {
   }
 
   componentDidMount() {
+    eventBus.emit("take-in-data");
     this.getMovies();
   }
 
   render() {
-    console.log();
     return `
       <it-preloader is-loading="${this.state.isLoading}">
       <sub-navigation></sub-navigation>

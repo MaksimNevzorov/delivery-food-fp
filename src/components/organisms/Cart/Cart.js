@@ -1,27 +1,82 @@
 import { Component } from "../../../core";
+import { eventBus } from "../../../core";
 
 export class DishCart extends Component {
+  constructor() {
+    super();
+    this.state = {
+      cartData: [],
+    };
+  }
+
+  takeData = (evt) => {
+    console.log("take-in-data", evt);
+    const { detail } = evt;
+    this.setState((state) => {
+      return {
+        ...state,
+        cartData: [...state.cartData, detail],
+      };
+    });
+  };
+
+  deleteDish(index) {
+    this.setState((state) => {
+      return {
+        ...state,
+        cartData: state.cartData.filter((_, indexItem) => indexItem != index),
+      };
+    });
+  }
+
+  componentWillUpdate() {
+    const buttons = [...this.querySelectorAll(".delete")];
+    buttons.forEach((item) => {
+      item.removeEventListener("click", this.deleteDish);
+    });
+  }
+
+  componentDidUpdate() {
+    const buttons = [...this.querySelectorAll(".delete")];
+    buttons.forEach((item) => {
+      const index = item.getAttribute("id");
+      item.addEventListener("click", () => this.deleteDish(index));
+    });
+  }
+
+  componentDidMount() {
+    eventBus.on("take-in-data", this.takeData);
+  }
+
+  componentWillUnmount() {
+    eventBus.off("take-in-data", this.takeData);
+  }
+
   render() {
     return `
-    <form class="dropdown-menu p-4 justify-content-end" style="width: 346px;">
-    <div class="mb-3">
-      <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-    </div>
-    <div class="mb-3">
-      <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-    </div>
-    <div class="mb-3">
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-        <label class="form-check-label" for="dropdownCheck2">
-          Remember me
-        </label>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </form>
+      <table class="table">
+        <tbody>
+          ${this.state.cartData
+            .map((item, index) => {
+              return `
+            <tr>
+              <th scope="row" >
+              <img src="${item.poster}" alt="${item.title}" style="width: 30px; height: 25px;">
+              </th>
+              <td>${item.title}</td>
+              <td>${item.cost}</td>
+              <td class="delete" id="${index}">delete</td>
+            </tr>
+            `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-dark">order</button>
+      <div class="col">${this.state.cartData.reduce((acc, item) => {
+        acc += Number(item.cost);
+        return acc;
+      }, 0)}</div>
     `;
   }
 }

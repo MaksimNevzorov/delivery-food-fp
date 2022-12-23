@@ -6,6 +6,7 @@ import { appFood } from "../../../constants/appFood";
 import { FormManager } from "../../../core/FormManager/FormManager";
 import { storageService } from "../../../services/Storage";
 import { databaseService } from "../../../services/Database";
+import "./admin.scss";
 
 export class AdminPage extends Component {
   constructor() {
